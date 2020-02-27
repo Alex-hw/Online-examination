@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="cn.examination.ssm.dao.PaperDao">
+
+<select id="findpaperAll"
+		resultType="cn.examination.ssm.domain.Paper">
+		select * from test_paper
+	</select>
+
+<insert id="addPaper"
+		parameterType="cn.examination.ssm.domain.Paper">
+		insert into test_paper(tID,tName,stems,rightKeys,userAccount)
+		values(#{tID},#{tName},#{stems},#{rightKeys},#{userAccount})
+	</insert>
+
+<select id="getPaperByID"
+		resultType="cn.examination.ssm.domain.Paper">
+		select * from test_paper where tID = #{tID}
+</select>
+
+<delete id="deletePaper" parameterType="cn.examination.ssm.domain.Paper">
+		delete from test_paper
+		where tID=#{tID}
+	</delete>
+
+</mapper>

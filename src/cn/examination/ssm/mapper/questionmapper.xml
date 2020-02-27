@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+   <mapper namespace="cn.examination.ssm.dao.QuestionDao">
+   <select id="findQuestionAll"
+		resultType="cn.examination.ssm.domain.QuestStem">
+		select * from questions_stem
+	</select>
+   
+   <insert id="saveQuestion"
+		parameterType="cn.examination.ssm.domain.QuestStem">
+		insert into questions_stem(sID,questionsName,rightKey,wrongKeyA,wrongKeyB,wrongKeyC,wrongKeyD,score)
+		values(#{sID},#{questionsName},#{rightKey},#{wrongKeyA},#{wrongKeyB},#{wrongKeyC},#{wrongKeyD},#{score})
+	</insert>
+	
+	<select id="updateQuest"
+		resultType="cn.examination.ssm.domain.QuestStem">
+		update questions_stem
+		<trim prefix="set" suffixOverrides=",">
+			<if test="questionsName != null">questionsName=#{questionsName},</if>
+			<if test="rightKey != null">rightKey=#{rightKey},</if>
+			<if test="wrongKeyA != null">wrongKeyA=#{wrongKeyA},</if>
+			<if test="wrongKeyB != null">wrongKeyB=#{wrongKeyB},</if>
+			<if test="wrongKeyC != null">wrongKeyC=#{wrongKeyC},</if>
+			<if test="wrongKeyD != null">wrongKeyD=#{wrongKeyD},</if>
+			<if test="score != null">score=#{score},</if>
+		</trim>
+		where sID=#{sID}
+	</select>
+	
+	<delete id="deleteQuest" parameterType="cn.examination.ssm.domain.QuestStem">
+		delete from questions_stem
+		where sID=#{sID}
+	</delete>
+	
+	<select id="getQuestByID"
+		resultType="cn.examination.ssm.domain.QuestStem">
+		select * from questions_stem
+		<where>
+			<if test="sID!=null and sID !=''">
+				and sID = #{sID}
+			</if>
+		</where>
+	</select>
+	
+	<!--<select id="findQuestOptionByID"
+		resultType="cn.examination.ssm.domain.QuestOption">
+	 	select * from questions_option where sID=#{sID} 
+		select * from questions_option qo,questions_stem qs
+		where qo.sID =#{sID} and qs.sID =#{sID}
+	</select> -->
+	
+	 <insert id="saveQuestOption" parameterType="cn.examination.ssm.domain.QuestOption">
+		insert into questions_option(oId,sId,optionIdentify,optionContent,tID,participant)
+		values(#{oID},#{sID},#{optionIdentify},#{optionContent},#{tID},#{participant})
+	</insert> 
+</mapper>

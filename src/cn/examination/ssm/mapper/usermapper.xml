@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+   <mapper namespace="cn.examination.ssm.dao.UserDao">
+
+	<select id="findUserAll"
+		resultType="cn.examination.ssm.domain.User">
+		select * from user
+	</select>
+	
+	<insert id="saveUser"
+		parameterType="cn.examination.ssm.domain.User">
+		insert into user(account,password,scale,loginStatus,unitName,tel)
+		values(#{account},#{password},#{scale},#{loginStatus},#{unitName},#{tel})
+	</insert>
+
+	<update id="updateUser"
+		parameterType="cn.examination.ssm.domain.User">
+		update user
+		<trim prefix="set" suffixOverrides=",">
+			<if test="account != null">account=#{account},</if>
+			<if test="password != null">password=#{password},</if>
+			<if test="scale != null">scale=#{scale},</if>
+			<if test="unitName != null">unitName=#{unitName},</if>
+			<if test="tel != null">tel=#{tel},</if>
+		</trim>
+		where account=#{account}
+	</update>
+	
+	<delete id="deleteUser" parameterType="cn.examination.ssm.domain.User">
+		delete from user
+		where account=#{account}
+	</delete>
+
+	<select id="getUserByAccount"
+		resultType="cn.examination.ssm.domain.User">
+		select * from user
+
+		<where>
+			<if test="account!=null and account !=''">
+				and account = #{account}
+			</if>
+		</where>
+	</select>
+	<select id="findUserInfoByNameAndPassword"
+		resultType="cn.examination.ssm.domain.User">
+		select * from userinfo
+
+		<where>
+			<if test="name!=null and name !=''">
+				and username like '%${name}%'
+			</if>
+			<if test="password!=null and password !=''">
+				and password = #{password}
+			</if>
+		</where>
+
+	</select>
+	<select id="findUser"
+	 resultType="cn.examination.ssm.domain.User"
+	 parameterType="cn.examination.ssm.domain.User">
+	 
+	 select * from userinfo
+	 <where>
+	 	<choose>
+	 		<when test="username!=null and username!=''">
+	 			and username like '%${username}%'
+	 		</when>
+	 		<when test="password!=null and password!=''">
+	 			and password = #{password}	
+	 		</when>
+	 		<otherwise>
+	 			and username like '%zhang%'
+	 		</otherwise>
+	 	</choose>
+	 </where>
+	
+	</select>
+	
+
+
+
+
+</mapper>

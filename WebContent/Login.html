@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>在线考试系统</h3>
+	<input type="text" name="username" id="username"/>
+	<input type="text" name="password" id="password"/>
+	<input name="sub" type="button" id="sub" onclick="Jump()" value="登录"/>
+	<span id="tip"></span>
+</body>
+
+<script src="js/jquery.js"></script>
+<script type="text/javascript">
+function Jump(){
+	$.ajax({
+		url : 'user/checkk', //根据操作传入不同的URL
+		data : {username:$('#username').val(),password:$('#password').val()}, //传入序列化的表单对象
+		type : "post",
+		async : true, //异步传输
+		timeout : 3000,
+		beforeSend : function() {
+			$('#tip').html('<span style="color: cornflowerblue">正在处理...</span>');
+			return true;
+		},
+		success : function(data) {
+		
+			if ($.trim(data)==$.trim('Success')) {
+				$('#tip').html('<span style="color: green">操作成功！</span>');
+			} else {
+				$('#tip').html('<span style="color: red">操作失败，请重试</span>');
+			}
+		},
+		error : function(XMLHttpRequest, textStatus,
+				errorThrown) {
+			// alert(XMLHttpRequest.status);//状态码
+			// alert(XMLHttpRequest.readyState);//状态
+			// alert(textStatus);//错误信息
+			alert("出错了");
+
+		},
+		complete : function() {
+
+		}
+	});
+}
+</script> 
+</html>

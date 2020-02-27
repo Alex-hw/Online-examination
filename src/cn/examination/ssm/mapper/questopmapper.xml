@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.examination.ssm.dao.QuestOpDao">
+
+	<select id="findQuestResult"
+		parameterType="String" resultType="QuestOption">
+		select * from questions_option where tID=#{arg0} and participant=#{arg1}
+	</select>
+	
+	<delete id="deleteQuestOp" parameterType="cn.examination.ssm.domain.QuestOption">
+		delete from questions_option
+		where tID=#{arg0} and participant=#{arg1}
+	</delete>
+
+</mapper>
